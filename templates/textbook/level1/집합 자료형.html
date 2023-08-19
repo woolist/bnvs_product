@@ -1,0 +1,61 @@
+<h1>파이썬 집합 자료형</h1>
+
+<p>파이썬에는 여러 종류의 데이터를 저장하고 조작할 수 있는 자료형들이 있습니다. 한 가지 유용한 자료형 중 하나는 '집합(set)'입니다. 집합은 중복되지 않는 항목들을 가지며, 순서가 없습니다.</p>
+
+<h2>1. 집합 생성하기</h2>
+
+<p>집합을 생성하기 위해서는 중괄호({})를 사용하거나 'set()' 함수를 사용할 수 있습니다.</p>
+
+<pre><code># 중괄호 사용
+my_set = {"apple", "banana", "orange"}
+
+# set() 함수 사용
+my_set = set(["apple", "banana", "orange"])
+</code></pre>
+
+<h2>2. 집합에 데이터 추가하기</h2>
+
+<p>집합에 데이터를 추가하기 위해서는 'add()' 메소드를 사용합니다.</p>
+
+<pre><code>my_set = {"apple", "banana", "orange"}
+my_set.add("kiwi")
+</code></pre>
+
+<h2>3. 집합에서 데이터 제거하기</h2>
+
+<p>집합에서 데이터를 제거하기 위해서는 'remove()' 메소드를 사용합니다.</p>
+
+<pre><code>my_set = {"apple", "banana", "orange"}
+my_set.remove("banana")
+</code></pre>
+
+<h2>4. 집합의 연산</h2>
+
+<p>집합은 여러 가지 연산을 지원합니다. 예를 들어, 교집합, 합집합, 차집합을 계산할 수 있습니다.</p>
+
+<pre><code>set1 = {1, 2, 3}
+set2 = {3, 4, 5}
+
+# 교집합
+intersection = set1 & set2
+
+# 합집합
+union = set1 | set2
+
+# 차집합
+difference = set1 - set2
+</code></pre>
+
+<h2>5. 집합의 멤버십 확인</h2>
+
+<p>특정 값이 집합에 포함되어 있는지 확인하기 위해서는 'in' 키워드를 사용합니다.</p>
+
+<pre><code>my_set = {"apple", "banana", "orange"}
+
+if "banana" in my_set:
+    print("banana는 집합에 포함됩니다.")
+</code></pre>
+
+<p>이와 같이 파이썬에서는 집합을 사용하여 중복을 제거하고 고유한 항목들을 조작할 수 있습니다. 집합 자료형은 많은 상황에서 유용하게 사용될 수 있습니다. 파이썬을 공부하며 집합 자료형에 익숙해지세요!</p>
+
+<p>더 자세한 내용은 파이썬 공식 문서를 참조하세요.</p>

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <style>
+        html,body {width:100%;  }
+        body,div,ul,li{margin:0; padding:0;}
+        ul,li {list-style:none;}
+
+        /*tab css*/
+        .tab{float:left; width:100%; height:290px;}
+        .tabnav{font-size:0; width:100%; border:1px solid black; border-bottom: 0; border-top: 0;}
+        .tabnav li{display: inline-block;  height:46px; text-align:center; border-right:1px solid #ddd;}
+        .tabnav li a:before{content:""; position:absolute; left:0; top:0px; width:100%; height:3px; }
+        .tabnav li a.active:before{background:#424755;}
+        .tabnav li a.active{border-bottom:1px solid #fff;}
+        .tabnav li a{ position:relative; display:block; background: #f8f8f8; color: #000; padding:0 30px; line-height:46px; text-decoration:none; font-size:16px;}
+        .tabnav li a:hover,
+        .tabnav li a.active{background:#fff; color:#424755; }
+        .tabcontent{padding: 0px; height:454px; width:100%;}
+    </style>
+    <link href="..\static\css\styls.css" rel="stylesheet" />
+    <link href="..\static\css\chatstyle.css" rel="stylesheet" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="tab">
+        <ul class="tabnav" style="font-weight: 900;">
+            <li><a href="#tab01">CHAT</a></li>
+            <li><a href="#tab02">BUG-FIX</a></li>
+            <li><a href="#tab03">CODE-REVIEW</a></li>
+        </ul>
+        <div class="tabcontent">
+        <!-- chat bot -->
+            <div id="tab01">
+                <div class="chat-content">
+                </div>
+                <div class="input-container" style="display:flex; flex-grow: 1; margin-top: 10px;">
+                
+                        <input  id="input"  value="Send a message" required >
+                    
+                    
+                        <button type="submit" id="send">Send</button>
+                    
+                </div>
+            </div>
+       
+            <!-- bug fix -->
+            <div id="tab02"> 
+                <div id='bugfix-gpt-box' class="bugfix-content">
+                </div>               
+                <textarea id='bugfix-answer' cols="120" rows="13" style="color:var(--bs-gray-500)">버그수정이 필요한 코드를 입력해주세요</textarea>                              
+                <button id="bugfix-send">제출</button>                              
+            </div>
+
+            <!-- code review -->
+            <div id="tab03">
+                <div id='codereview-gpt-box' class="bugfix-content">
+                </div>               
+                <textarea id='codereview-answer' cols="120" rows="13" style="color:var(--bs-gray-500)">설명이 필요한 코드를 입력해주세요</textarea>                              
+                <button id="codereview-send">제출</button>
+            </div>
+        </div>
+    </div><!--tab-->
+      
+      <script>
+            // tab menu
+            $(function(){
+            $('.tabcontent > div').hide();
+            $('.tabnav a').click(function () {
+                $('.tabcontent > div').hide().filter(this.hash).fadeIn();
+                $('.tabnav a').removeClass('active');
+                $(this).addClass('active');
+                return false;
+            }).filter(':eq(0)').click();
+            });
+
+            // chatbot
+            function userinputadd(mes){
+                var template = `
+                    <div class="line">
+                    <span class="chat-box mine">${mes}</span>
+                    </div>`
+                    document.querySelector('.chat-content').insertAdjacentHTML('beforeend',template);
+            }
+            function gptadd(mes){
+                var template = `
+                    <div class="line">
+                    <span class="chat-box">${mes}</span>
+                    </div>`
+                    document.querySelector('.chat-content').insertAdjacentHTML('beforeend',template);
+            }
+            function processUserInput() {
+                var userInput = document.querySelector('#input').value;
+                userinputadd(userInput)
+                if (userInput) {
+                    // Flask API로 데이터를 전달하고, 응답을 받는 비동기 요청(Ajax)을 수행합니다.
+                    fetch('/chatbot', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ 'user_input': userInput })
+                    })
+                    .then(response => response.json())
+                    .then(data => gptadd(data.response))
+                    .catch(error => console.error('Error:', error));
+                }
+                document.getElementById("input").value = ""; // 입력창 비우기
+            }
+
+            document.getElementById("send").addEventListener("click", processUserInput);
+            
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+      <!-- Core theme JS-->
+      <!-- <script src="..\static\js\scripts.js"></script> -->
+      <!-- <script src="..\static\js\chat.js"></script> -->
+      
+      <!-- chatbot input글 삭제 -->
+      
+        <script>
+            window.onload = function() {
+                var inputElem = document.getElementById('input');
+                var sendButton = document.getElementById('send');
+                
+                inputElem.addEventListener('focus', function() {
+                    if (inputElem.value === 'Send a message') {
+                        inputElem.value = '';
+                    }
+                });
+                inputElem.addEventListener('blur', function() {
+                    if (inputElem.value === '') {
+                        inputElem.value = 'Send a message';
+                    }
+                });
+                inputElem.addEventListener('keypress', function(event) {
+                    if (event.keyCode === 13 || event.which === 13) { // 13은 엔터 키의 키 코드입니다.
+                        sendButton.click(); // 버튼의 'click' 이벤트를 트리거합니다.
+                    }
+                });
+            };
+        </script>
+        
+        <!-- bug fix -->
+        <script>
+            $(document).ready(function(){           //웹 페이지가 완전히 로드된 후에 실행
+                
+                // 문제 정오답 체크 - 문제와 사용자 입력을 전달해 정오답 알림 띄우기
+                $("#bugfix-send").click(function(){
+                    // id를 통해 값 가져오기
+                    var answer = $("#bugfix-answer").val();
+    
+                    // 서버에 전달
+                    $.ajax({
+                        url: "/bugfix",
+                        type: "POST",
+                        data: JSON.stringify({answer: answer}),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(data){
+                            // 서버에서 반환한 메시지를 팝업으로 띄움
+                            var exam_html = data['message'];
+                            $("#bugfix-gpt-box").html(exam_html);
+                        }
+                    });
+                });              
+            });
+        </script>
+
+        <!-- code review-->
+        <script>
+            $(document).ready(function(){           //웹 페이지가 완전히 로드된 후에 실행
+                
+                // 문제 정오답 체크 - 문제와 사용자 입력을 전달해 정오답 알림 띄우기
+                $("#codereview-send").click(function(){
+                    // id를 통해 값 가져오기
+                    var answer = $("#codereview-answer").val();
+    
+                    // 서버에 전달
+                    $.ajax({
+                        url: "/codedescription",
+                        type: "POST",
+                        data: JSON.stringify({answer: answer}),
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        success: function(data){
+                            // 서버에서 반환한 메시지를 팝업으로 띄움
+                            var exam_html = data['message'];
+                            $("#codereview-gpt-box").html(exam_html);
+                        }
+                    });
+                });              
+            });
+        </script>
+
+</body>
+</html>

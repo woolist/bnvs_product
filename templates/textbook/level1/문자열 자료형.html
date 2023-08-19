@@ -1,0 +1,63 @@
+
+<h1>파이썬 교재 - 문자열 자료형</h1>
+
+<h2>문자열(String)이란?</h2>
+<p>문자열은 파이썬에서 가장 일반적으로 사용되는 자료형 중 하나입니다. 문자열은 작은 따옴표('')나 큰 따옴표("")로 둘러싸여 있는 문자들의 집합입니다.</p>
+<p>예를 들어, 'Hello, World!'이나 "Python"은 모두 문자열입니다.</p>
+
+<h2>문자열 생성하기</h2>
+<p>문자열을 생성하는 방법은 다양합니다.</p>
+<p>1. 작은 따옴표('')나 큰 따옴표("")로 둘러싸기</p>
+<pre><code>string1 = 'Hello, World!'
+string2 = "Python"</code></pre>
+<p>2. 문자열 연결하기</p>
+<pre><code>string3 = string1 + ' ' + string2</code></pre>
+<p>3. 문자열 반복하기</p>
+<pre><code>string4 = 'abc' * 3</code></pre>
+
+<h2>문자열 다루기</h2>
+<p>문자열에는 다양한 기능과 메서드가 있어 문자열을 다루기에 매우 편리합니다.</p>
+<p>1. 인덱스</p>
+<pre><code>text = 'Hello, World!'
+print(text[0])  # 'H'</code></pre>
+<p>2. 슬라이싱</p>
+<pre><code>text = 'Hello, World!'
+print(text[7:12])  # 'World'</code></pre>
+<p>3. 길이 구하기</p>
+<pre><code>text = 'Hello, World!'
+length = len(text)
+print(length)  # 13</code></pre>
+<p>4. 대소문자 변환</p>
+<pre><code>text = 'Hello, World!'
+print(text.upper())  # 'HELLO, WORLD!'
+print(text.lower())  # 'hello, world!'</code></pre>
+
+<h2>문자열 포맷팅</h2>
+<p>문자열 포맷팅은 문자열 안에 변수의 값이나 다른 표현식을 삽입하는 것을 의미합니다.</p>
+<p>1. % 연산자를 이용한 포맷팅</p>
+<pre><code>name = 'Tom'
+age = 25
+print("My name is %s and I'm %d years old" % (name, age))</code></pre>
+<p>2. format() 메서드를 이용한 포맷팅</p>
+<pre><code>name = 'Tom'
+age = 25
+print("My name is {} and I'm {} years old".format(name, age))</code></pre>
+<p>3. f-string을 이용한 포맷팅 (Python 3.6 이상)</p>
+<pre><code>name = 'Tom'
+age = 25
+print(f"My name is {name} and I'm {age} years old")</code></pre>
+
+<h2>문자열 관련 함수와 메서드</h2>
+<p>문자열을 다루기 위해 사용할 수 있는 함수와 메서드들이 있습니다.</p>
+<p>1. len() 함수</p>
+<pre><code>text = 'Hello, World!'
+length = len(text)
+print(length)  # 13</code></pre>
+<p>2. split() 메서드</p>
+<pre><code>text = 'Python is easy'
+words = text.split(' ')
+print(words)  # ['Python', 'is', 'easy']</code></pre>
+<p>3. replace() 메서드</p>
+<pre><code>text = 'Hello, World!'
+new_text = text.replace('Hello', 'Hi')
+print(new_text)  # 'Hi, World!'</code></pre>

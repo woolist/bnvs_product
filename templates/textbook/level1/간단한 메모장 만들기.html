@@ -1,0 +1,120 @@
+교재 내용입니다.
+
+<h1>파이썬 간단한 메모장 만들기</h1>
+
+<h2>1. 개요</h2>
+<p>이 교재에서는 파이썬을 사용하여 간단한 메모장을 만드는 방법에 대해 알려드립니다. 파이썬의 기본 문법과 파일 입출력에 대한 이해가 필요합니다.</p>
+
+<h2>2. 필요한 개념</h2>
+<ul>
+  <li>변수: 값을 저장하기 위한 공간</li>
+  <li>조건문: 특정 조건에 따라 다른 동작을 수행</li>
+  <li>반복문: 특정 코드를 여러 번 실행</li>
+  <li>함수: 재사용 가능한 코드 블록</li>
+  <li>파일 입출력: 파일을 읽거나 쓰기 위한 기능</li>
+</ul>
+
+<h2>3. 기능</h2>
+<p>이 간단한 메모장은 아래와 같은 기능을 제공합니다.</p>
+<ul>
+  <li>메모 작성하기</li>
+  <li>메모 읽기하기</li>
+  <li>메모 수정하기</li>
+  <li>메모 삭제하기</li>
+</ul>
+
+<h2>4. 구현</h2>
+<p>아래와 같은 순서로 각 기능을 구현해봅시다.</p>
+<ol>
+  <li>메모 작성하기</li>
+  <li>메모 읽기하기</li>
+  <li>메모 수정하기</li>
+  <li>메모 삭제하기</li>
+</ol>
+
+<h3>4.1. 메모 작성하기</h3>
+<p>사용자로부터 메모 내용을 입력받아 파일에 저장합니다.</p>
+<p>예시 코드:</p>
+<pre>
+  <code>
+def write_memo():
+    memo = input("메모 내용을 입력하세요: ")
+    with open("memo.txt", "a") as f:
+        f.write(memo + "\n\n")
+  </code>
+</pre>
+
+<h3>4.2. 메모 읽기하기</h3>
+<p>저장된 메모 파일을 읽고 화면에 출력합니다.</p>
+<p>예시 코드:</p>
+<pre>
+  <code>
+def read_memo():
+    with open("memo.txt", "r") as f:
+        memos = f.readlines()
+        for memo in memos:
+            print(memo)
+  </code>
+</pre>
+
+<h3>4.3. 메모 수정하기</h3>
+<p>원하는 메모를 사용자로부터 입력받고, 해당 메모를 수정하여 파일에 저장합니다.</p>
+<p>예시 코드:</p>
+<pre>
+  <code>
+def edit_memo():
+    with open("memo.txt", "r") as f:
+        memos = f.readlines()
+
+    print("수정할 메모 번호를 선택하세요:")
+    for i, memo in enumerate(memos):
+        print(f"{i+1}. {memo}")
+    
+    memo_index = int(input()) - 1
+    
+    print("수정할 내용을 입력하세요:")
+    new_memo = input()
+    
+    memos[memo_index] = new_memo + "\n\n"
+    
+    with open("memo.txt", "w") as f:
+        f.writelines(memos)
+  </code>
+</pre>
+
+<h3>4.4. 메모 삭제하기</h3>
+<p>원하는 메모를 사용자로부터 입력받고, 해당 메모를 삭제합니다.</p>
+<p>예시 코드:</p>
+<pre>
+  <code>
+def delete_memo():
+    with open("memo.txt", "r") as f:
+        memos = f.readlines()
+
+    print("삭제할 메모 번호를 선택하세요:")
+    for i, memo in enumerate(memos):
+        print(f"{i+1}. {memo}")
+    
+    memo_index = int(input()) - 1
+    
+    del memos[memo_index]
+    
+    with open("memo.txt", "w") as f:
+        f.writelines(memos)
+  </code>
+</pre>
+
+<h2>5. 실행</h2>
+<p>위에서 작성한 함수들을 이용하여 메모장 프로그램을 실행해보세요.</p>
+<pre>
+  <code>
+write_memo()
+read_memo()
+edit_memo()
+read_memo()
+delete_memo()
+read_memo()
+  </code>
+</pre>
+
+<p>이제 간단한 메모장을 만들 수 있게 되었습니다. 파이썬의 다양한 기능을 활용하여 기능을 추가해보세요!</p>
