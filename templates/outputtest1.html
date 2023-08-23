@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.8.9/brython.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/brython/3.8.9/brython_stdlib.min.js"></script>
-  </head>
-  <body onload="brython()">
+<head>
+    <title>Code Editor</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
     <textarea id="code" rows="10" cols="50"></textarea>
-    <button onclick="runCode()">Run</button>
-    <div id="output"></div>
-
-    <script type="text/javascript">
-      function runCode() {
-        var code = document.getElementById("code").value;
-        var output = document.getElementById("output");
-        try {
-          var result = __BRYTHON__.run_script(code);
-          output.innerHTML = "Result: " + result;
-        } catch (e) {
-          output.innerHTML = "Error: " + e;
-        }
-      }
+    <button id="runButton">Run</button>
+    <pre id="output"></pre>
+    <pre id="error"></pre>
+    
+    <script>
+        $(document).ready(function() {
+            $('#runButton').click(function() {
+                let code = $('#code').val();
+                
+                $.ajax({
+                    url: '/execute',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ 'code': code }),
+                    success: function(response) {
+                        $('#output').text(response.output);
+                        $('#error').text(response.error);
+                    },
+                    error: function() {
+                        $('#output').text('');
+                        $('#error').text('An error occurred.');
+                    }
+                });
+            });
+        });
     </script>
-  </body>
+</body>
 </html>

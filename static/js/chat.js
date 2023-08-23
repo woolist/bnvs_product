@@ -30,7 +30,7 @@ function addBotMessage(message) {
 function user_chatGPT35(message) {
     //chatgpt 응답 받아오기
     const configuration = new Configuration({
-        apiKey: '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',
+        apiKey: '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',
     });
     const openai = new OpenAIApi(configuration);
 

@@ -10,7 +10,7 @@ def choice_problem(url):
     file_name = os.path.basename(url)
     chap_name = os.path.splitext(file_name)[0]
     #문제 url 만들기
-    new_url = f'static/sorce/problume/{chap_name}.txt'
+    new_url = f'static/source/problem/{chap_name}.txt'
     #문제를 list로 저장 후 전달
     with open(new_url, encoding='utf-8', mode='r') as file:
         lines = file.read()

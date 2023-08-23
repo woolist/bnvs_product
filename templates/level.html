@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BNVs log-in</title>
+    <script>
+        function goToNextPage() {
+            window.location.href = "/main";
+        }
+    </script>
+    <style>
+        .A {
+            display: grid;
+            place-items: center;
+            min-height: 100dvh;
+        }
+        .text{
+            width:auto;
+        }
+        .login-button{
+            height: 50px;
+            margin-top: 10px;
+            background-color: #194d7f;
+            color:aliceblue;
+            font-weight: 900;
+            width:330px
+        }
+        .login-button:hover{
+            background-color: #3b2fad; /* 마우스를 올렸을 때의 배경 색상 */
+            color: aliceblue; /* 마우스를 올렸을 때의 글자 색상 */
+        }
+        .input-field {
+            width: 320px; /* 입력 필드가 각 div의 전체 너비를 차지하게 합니다 */
+            height: 30px;
+            margin-top: 10px;
+        }
+        .signup_find{
+            text-align: center;
+            font-size: x-small;
+            margin-top: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="A"> 
+        <div class="logo-img">
+            <img src="static/assets/bnvs_mainlogo.png" style="width: 330px">
+            <div class="login">   
+                <h1>레벨 선택</h1>
+                <form method="POST" action="/content">
+                    <label for="level">레벨:</label>
+                    <select name="level" id="level">
+                        {% for option in levels %}
+                            <option value="{{ option }}">{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                    <br>
+                    <button type="submit" class="login-button" onclick="goToNextPage()">확 인</button>
+                </div>
+            </div>     
+        </div>
+        
+    </div>
+    
+    
+</body>
+</html>

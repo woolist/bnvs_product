@@ -5,8 +5,10 @@
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <title>CodeSync</title>
     <link rel="stylesheet" href="static/css/styles.css">
-    <script src="static/js/resizer.js" defer></script>
-
+    <script src="static/js/main.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <!-- 헤더 -->
@@ -32,20 +34,20 @@
               <li>
                 <a href="#"></i>자료형</a>
                 <ul>
-                    <li><a class="dropdown-item" href="templates/textbook/level1/숫자형.html">01.숫자형</a></li>
-                    <li><a class="dropdown-item" href="templates/textbook/level1/문자열 자료형.html">02.문자열 자료형</a></li>
-                    <li><a class="dropdown-item" href="templates/textbook/level1/리스트 자료형.html">03.리스트 자료형</a></li>
-                    <li><a class="dropdown-item" href="templates/textbook/level1/튜플 자료형.html">04.튜플 자료형</a></li>
-                    <li><a class="dropdown-item" href="templates/textbook/level1/딕셔너리 자료형.html">05.딕셔너리 자료형</a></li>
-                    <li><a class="dropdown-item" href="templates/textbook/level1/집합 자료형.html">06.집합 자료형</a></li>
+                    <li><a class="dropdown-item" href="textbook/level1/숫자형.html">01.숫자형</a></li>
+                    <li><a class="dropdown-item" href="textbook/level1/문자열 자료형.html">02.문자열 자료형</a></li>
+                    <li><a class="dropdown-item" href="textbook/level1/리스트 자료형.html">03.리스트 자료형</a></li>
+                    <li><a class="dropdown-item" href="textbook/level1/튜플 자료형.html">04.튜플 자료형</a></li>
+                    <li><a class="dropdown-item" href="textbook/level1/딕셔너리 자료형.html">05.딕셔너리 자료형</a></li>
+                    <li><a class="dropdown-item" href="textbook/level1/집합 자료형.html">06.집합 자료형</a></li>
                 </ul>
               </li>
               <li>
                 <a href="#">제어문</a>
                 <ul>
-                    <li><a class="dropdown-item" href="templates/textbook/level1/if문.html">if문</a></li>
-                    <li><a class="dropdown-item" href="templates/textbook/level1/for문.html">for문</a></li>
-                    <li><a class="dropdown-item" href="templates/textbook/level1/while문.html">while문</a></li>
+                    <li><a class="dropdown-item" href="textbook/level1/if문.html">if문</a></li>
+                    <li><a class="dropdown-item" href="textbook/level1/for문.html">for문</a></li>
+                    <li><a class="dropdown-item" href="textbook/level1/while문.html">while문</a></li>
                 </ul>
               </li>
               
@@ -83,27 +85,27 @@
             </br>
             </br>
             </br>
-                <div class="centerline"></div>
-            </br>
-            </br>
-            </br>
+            </div>  
+                
+              
+         
             <!-- 문제출제 -->
-                <div class="col-4">
+            <!-- <div>
+                <div>
+                    <p id="exam-box">문제가 들어갈 페이지</p>
+                </div>
+            </br>
+            </br>
+                <div>
+                    <p>문제입력 페이지</p>
                     <div>
-                        <p id="exam-box">문제가 들어갈 페이지</p>
-                    </div>
-                </br>
-                </br>
-                    <div>
-                        <p>문제입력 페이지</p>
-                        <div>
-                            <textarea id="answer" cols="50" rows="10"></textarea>
-                            <button id="send">Send</button>
-                            <button id="next">next</button>
-                        </div>
+                        <textarea id="answer" cols="50" rows="10"></textarea>
+                        <button id="send">Send</button>
+                        <button id="next">next</button>
                     </div>
                 </div>
-            </div>
+            </div> -->
+           
                 
             
         </div>
@@ -111,8 +113,13 @@
         <div class="horizontal-line"></div>
 
         <div class="right">
+            <!-- 문제 출제 -->
+            <div style="color:#e6e9f3; height: 5rem;">
+                <p id="exam-box">문제가 들어갈 페이지</p>
+            </div>
             <!-- 코드 편집기 -->
             <div id="editor" class="top">코드를 입력하세요..</div>
+            <!-- <textarea id="editor" rows="10" cols="50"></textarea> -->
             <div class="resizer" data-direction="vertical"></div>
             <div class="centerline"></div>
             <div class="center">
@@ -128,83 +135,15 @@
             </div>
             <!-- 코드 출력 부분 -->
             <div class="centerline"></div>
-            <div class="bottom">output</div>
+            <pre class="bottom" id="output"></pre>
+            <pre class="bottom" id="error"></pre>
+
             </div>
         </div>
         <footer></footer>
     <script src="static/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 
-    <!-- editor -->
-    <script>
-        var editor = ace.edit("editor");
-        editor.setTheme("ace/theme/twilight");
-        editor.session.setMode("ace/mode/python");
-    </script>
-
-    <!-- contents -->
-    <script>
-        $(document).ready(function(){           //웹 페이지가 완전히 로드된 후에 실행
-            // 챕터를 선택하면 챕터에 맞게 교재 부분을 변경
-            $(".dropdown-item").click(function(event){
-                event.preventDefault();         // 기본 클릭 동작이 되지않도록 제어
     
-                var href = $(this).attr('href');            // 클릭된 링크의 href 값을 가져옴
-    
-                // href 값을 서버에 전달
-                $.ajax({
-                    url: "/content/render_template",
-                    type: "POST",
-                    data: JSON.stringify({title: href}),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(data){
-                        // JSON에서 교재와 문제 내용을 가져옴
-                        var html_content = data['html'];
-                        var exam_html = data['exam_html'];
-    
-                        // 기존의 내용을 지우고 새로운 내용을 추가
-                        $(".book-section").html(html_content);
-                        $("#exam-box").html(exam_html);
-                    }
-                });
-            });
-
-            // 문제 정오답 체크 - 문제와 사용자 입력을 전달해 정오답 알림 띄우기
-            $("#send").click(function(){
-                // id를 통해 값 가져오기
-                var plob = $("#exam").val();
-                var answer = $("#answer").val();
-
-                // 서버에 전달
-                $.ajax({
-                    url: "/content/check_answer",
-                    type: "POST",
-                    data: JSON.stringify({answer: answer, plob:plob}),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(data){
-                        // 서버에서 반환한 메시지를 팝업으로 띄움
-                        alert(data['message']);
-                    }
-                });
-            });
-
-            // 다음 문제 출력
-            $("#next").click(function(){
-                $.ajax({
-                    url: "/content/next_plob",
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function(data){
-                        var exam_html = data['exam_html'];
-                        $("#exam-box").html(exam_html);     // 서버에서 받아온 문제 출력
-                        $("#answer").val('');               // textarea 리셋
-                    }
-                });                    
-            });                
-        });
-    </script>
      
 </body>
 </html>
